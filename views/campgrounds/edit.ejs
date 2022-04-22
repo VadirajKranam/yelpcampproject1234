@@ -1,0 +1,76 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">Edit Campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="post" novalidate class="validated-form needs-validation" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" value="<%=campground.title%>" id="title" name="campground[title]" required>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" value="<%=campground.location%>" id="location" name="campground[location]" required>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <!-- <input type="file" name="image" id="" multiple> -->
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" name="image" id="inputGroupFile02" multiple>
+                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                  </div>
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="image">Image url</label>
+                    <input class="form-control" type="text" id="image" value="" name="campground[image]" required>
+                    <div class="valid-feedback">Looks good!</div>
+                </div> -->
+                <div class="mb-3">
+                    <label class="form-label" for="price">Campground Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" value="<%=campground.price%>" id="price" name="campground[price]" aria-label="price" aria-describedby="price-label" required>
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="campground[description]" required><%= campground.description %> </textarea>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="mb-3">
+                     <% campground.images.forEach(function(img,i){ %>
+                          <img src="<%= img.thumbnail %> " class="img-thumbnail" alt="">
+                          <div class="form-check-inline">
+                              <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= img.filename %>">
+                          </div>
+                          <label for="">Delete?</label>
+                    <% }) %>  
+                </div>
+                <div class="mb-3"><button class="btn btn-info">Update campground</button></div>
+            </form>
+            <a type="button" class="btn btn-primary" href="/campgrounds">Back to campgrounds</a>
+
+        </div>
+    </div>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
